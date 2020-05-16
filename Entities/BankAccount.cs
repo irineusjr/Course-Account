@@ -1,0 +1,44 @@
+﻿using Account.Entities.Exceptions;
+
+namespace Account.Entities
+{
+    class BankAccount
+    {
+        public int Number { get; set; }
+        public string Holder { get; set; }
+        public double Balance { get; set; }
+        public double WithdrawLimit { get; set; }
+
+        public BankAccount() 
+        {
+        }
+
+        public BankAccount(int number, string holder, double balance, double withdrawLimit)
+        {
+            Number = number;
+            Holder = holder;
+            Balance = balance;
+            WithdrawLimit = withdrawLimit;
+        }
+
+        public void Deposit (double amount)
+        {
+            Balance += amount;
+        }
+
+        public void Withdraw (double amount)
+        {
+            
+            if (amount > WithdrawLimit)
+            {
+                throw new DomainException("Withdraw error: amount is greater than limit");
+            }
+            if (amount > Balance)
+            {
+                throw new DomainException("Withdraw error: amount is greater than balance");
+            }
+            Balance -= amount;
+        }
+
+    }
+}
